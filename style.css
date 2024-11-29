@@ -73,7 +73,7 @@ th, td {
 		page-break-inside: none;
 		break-inside: none;
 	}
-    body {
+    body {transform: scale(.7);
         -webkit-print-color-adjust: exact;
 		width: 100vw; height: 100vh;
         transform-origin: top left;

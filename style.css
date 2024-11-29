@@ -65,7 +65,7 @@ th, td {
         margin-right: 10px;
         margin-top: 10pxpx;
         margin-top: 10px;
-        margin-left: 100px;
+        margin-left: 10px;
         margin-bottom: 10px;
         }
 
@@ -73,7 +73,7 @@ th, td {
 		page-break-inside: none;
 		break-inside: none;
 	}
-    body {transform: scale(.7);
+    body {transform: scale(.8);
         -webkit-print-color-adjust: exact;
 		width: 100vw; height: 100vh;
         transform-origin: top left;

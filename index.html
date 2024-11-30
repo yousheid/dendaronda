@@ -36,13 +36,14 @@
                 <input type="number" id="kurang" class="mb-4 p-2 border border-gray-300 rounded w-full bg-red-200" readonly />
             </div>
         </div>
+		
         <div class="mb-4 border p-4 bg-yellow-500 text-white rounded">
             <label class="inline-flex items-center">
-                <input type="radio" name="period" value="daily" class="form-radio" onclick="toggleInputs()">
+                <input type="radio" id="daily" name="period" value="daily" class="form-radio" onclick="toggleInputs()">
                 <span class="ml-2 text-gray-500">Harian</span>
             </label>
             <label class="inline-flex items-center ml-6">
-                <input type="radio" name="period" value="monthly" class="form-radio" onclick="toggleInputs()">
+                <input type="radio" id="monthly" name="period" value="monthly" class="form-radio" onclick="toggleInputs()">
                 <span class="ml-2 p-1 text-black ">Bulanan</span>
             </label>
          <div class="gap-4 ml-6">
@@ -71,21 +72,25 @@
             </div>
         </div>
         <div class="mb-4 flex space-x-4">
-            <button id="saveBtn" class="p-2 bg-blue-500 text-white rounded"><i class="fas fa-save"></i></button>
-            <button id="exportExcelBtn" class="p-2 bg-green-500 text-white rounded"><i class="fas fa-file-excel"></i></button>
-            <button id="printBtn" class="p-2 bg-yellow-500 text-white rounded"><i class="fas fa-print"></i></button>
-            <button id="deleteByNameBtn" class="p-2 bg-red-300 text-white rounded"><i class="fas fa-user"></i> </button>
+            <button id="saveBtn" class="p-2 bg-blue-500 text-white rounded"><i class="fas fa-save"></i> Simpan</button>
+            <button id="exportExcelBtn" class="p-2 bg-green-500 text-white rounded"><i class="fas fa-file-excel"></i> Export</button>
+            <button id="printBtn" class="p-2 bg-yellow-500 text-white rounded"><i class="fas fa-print"></i> Print</button>
+            <button id="deleteByNameBtn" class="p-2 bg-red-300 text-white rounded" title="Ketik Nama sesuai yang terdaftar di tabel"><i class="fas fa-user"></i> Hapus User <i class="fas fa-times ml-2"></i></button>
             <button id="deleteBtn" class="p-2 bg-red-500 text-white rounded"><i class="fas fa-trash"></i></button>
         </div>
         <div id="notification" class="hidden fixed top-4 right-4 bg-red-500 text-white p-4 rounded shadow-lg flex items-center space-x-2">
             <i class="fas fa-exclamation-triangle"></i>
             <span id="notificationMessage"></span>
             <button id="closeNotification" class="ml-4 text-white"><i class="fas fa-times"></i></button>
+		
 </div>
-        </div><input type="text" id="searchNama" class="mb-4 p-2 border border-gray-300 rounded w-full" placeholder="Cari berdasarkan nama..." />
-        <div class="dataTable">
+		<input type="text" id="searchNama" class="mb-4 p-2 border border-gray-300 rounded w-full" placeholder="Cari berdasarkan nama..." />	
+
+        </div>
+        <div class="dataTable"> 
         <table id="dataTable" class="min-w-full bg-white border border-gray-300 rounded border-collapse">
-            <thead class="bg-blue-500 text-white">
+		    <thead class="bg-blue-500 text-white">
+			<tr><span id="tgl"></span></tr>
                 <tr>
                     <th class="py-2 px-4 border border-gray-300">Nama</th>
                     <th class="py-2 px-4 border border-gray-300">Blok</th>
@@ -194,18 +199,22 @@
 
         });
 
-        document.getElementById('nama').addEventListener('input', function() {
-
-            const nama = this.value;
-
-            const rows = document.querySelectorAll('#dataTable tbody tr');
-
-            rows.forEach(row => {
-
-                if (row.cells[0].textContent === nama) {
-
-                    document.getElementById('blok').value = row.cells[1].textContent;
-
+document.getElementById("nama").addEventListener("input", function() {
+            var t = this.value;
+            const e = document.querySelectorAll("#dataTable tbody tr");
+            e.forEach(e => {
+                if (e.cells[0].textContent === t) {
+                    document.getElementById("blok").value = e.cells[1].textContent;
+                    document.getElementById("blnK").value = parseInt(e.cells[2].textContent.replace(/[^0-9]/g, "")) || 0;
+                    document.getElementById("blnS").value = parseInt(e.cells[8].textContent.replace(/[^0-9]/g, "")) || 0;
+                    document.getElementById("kurang").value = parseInt(e.cells[9].textContent.replace(/[^0-9]/g, "")) || 0;
+					document.getElementById("bayar").value = parseInt(e.cells[10].textContent.replace(/[^0-9]/g, "")) || 0;
+                    document.getElementById("m1").checked = parseInt(e.cells[3].textContent.replace(/[^0-9]/g, "")) > 0;
+                    document.getElementById("m2").checked = parseInt(e.cells[4].textContent.replace(/[^0-9]/g, "")) > 0;
+                    document.getElementById("m3").checked = parseInt(e.cells[5].textContent.replace(/[^0-9]/g, "")) > 0;
+                    document.getElementById("m4").checked = parseInt(e.cells[6].textContent.replace(/[^0-9]/g, "")) > 0;
+                    document.getElementById("bln").checked = parseInt(e.cells[7].textContent.replace(/[^0-9]/g, "")) > 0;
+                    toggleInputs();
                 }
 
             });
@@ -599,7 +608,7 @@
 
         });
 
-                                                                               function toggleInputs() {
+function toggleInputs() {
 
             const period = document.querySelector('input[name="period"]:checked').value;
 
@@ -660,7 +669,75 @@
             }
 
         }
-
+var date = new Date();
+var tahun = date.getFullYear();
+var bulan = date.getMonth();
+var tanggal = date.getDate();
+var hari = date.getDay();
+var jam = date.getHours();
+var menit = date.getMinutes();
+var detik = date.getSeconds();
+switch(hari) {
+ case 0: hari = "Minggu"; break;
+ case 1: hari = "Senin"; break;
+ case 2: hari = "Selasa"; break;
+ case 3: hari = "Rabu"; break;
+ case 4: hari = "Kamis"; break;
+ case 5: hari = "Jum'at"; break;
+ case 6: hari = "Sabtu"; break;
+}
+switch(bulan) {
+ case 0: bulan = "Januari"; break;
+ case 1: bulan = "Februari"; break;
+ case 2: bulan = "Maret"; break;
+ case 3: bulan = "April"; break;
+ case 4: bulan = "Mei"; break;
+ case 5: bulan = "Juni"; break;
+ case 6: bulan = "Juli"; break;
+ case 7: bulan = "Agustus"; break;
+ case 8: bulan = "September"; break;
+ case 9: bulan = "Oktober"; break;
+ case 10: bulan = "November"; break;
+ case 11: bulan = "Desember"; break;
+}
+var tampilTanggal = "" + hari + ", " + tanggal + " " + bulan + " " + tahun;
+ 
+    document.getElementById("tgl").innerHTML = tampilTanggal;
+	
+	function printdiv(printpage) {
+    var headstr = "<html><head><title></title></head><body>";
+    var footstr = "</body>";
+    var elements = document.getElementsByClassName('hide-print-area');
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].style.display = 'none';
+    }
+    var newstr = document.all.item(printpage).innerHTML;
+    var oldstr = document.body.innerHTML;
+    document.body.innerHTML = newstr;
+    window.print();
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].style.display = 'block';
+    }
+    return false;
+}
+window.onload=function(e){
+  //alert();
+window.onafterprint = function() {
+    //window.location.reload(false);
+   location.reload();
+};
+window.matchMedia('print').addListener(function (media) {
+                    //do before-printing stuff
+                      if(media.matches){
+                        
+                      }
+                      else{
+                          media.preventDefault();
+                          window.location.reload(true);
+                         //location.reload();
+                      }
+                    });
+}
     </script>
 
     </body>

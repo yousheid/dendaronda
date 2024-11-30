@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Import and Display Table</title>
+    <title>Denda Ronda</title>
     <link  crossorigin="anonymous" media="all" rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
@@ -71,8 +71,8 @@
             </div>
         </div>
         <div class="mb-4 flex space-x-4">
-            <button id="saveBtn" class="p-2 bg-blue-500 text-white rounded"><i class="fas fa-save"></i>Simpan</button>
-            <button id="downloadBtn" class="p-2 bg-green-500 text-white rounded"><i class="fas fa-download"></i>Download</button>
+            <button id="saveBtn" class="p-2 bg-blue-500 text-white rounded"><i class="fas fa-save"></i></button>
+            <button id="exportExcelBtn" class="p-2 bg-green-500 text-white rounded"><i class="fas fa-file-excel"></i></button>
             <button id="printBtn" class="p-2 bg-yellow-500 text-white rounded"><i class="fas fa-print"></i></button>
             <button id="deleteByNameBtn" class="p-2 bg-red-300 text-white rounded"><i class="fas fa-user"></i> </button>
             <button id="deleteBtn" class="p-2 bg-red-500 text-white rounded"><i class="fas fa-trash"></i></button>
@@ -364,16 +364,13 @@
 
         });
 
-        document.getElementById('downloadBtn').addEventListener('click', function() {
 
+
+        document.getElementById('exportExcelBtn').addEventListener('click', function() {
             const table = document.getElementById('dataTable');
-
-            const wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
-
-            XLSX.writeFile(wb, 'denda_ronda.xlsx');
-
+            const wb = XLSX.utils.table_to_book(table, { sheet: "2025" });
+            XLSX.writeFile(wb, 'Denda_Ronda.xlsx');
         });
-
         document.getElementById('printBtn').addEventListener('click', function() {
 
             const printContent = document.getElementById('dataTable').outerHTML;
